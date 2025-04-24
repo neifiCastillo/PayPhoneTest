@@ -55,6 +55,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddScoped<IWalletService, WalletService>();
+builder.Services.AddScoped<IHistoryService, HistoryService>();
 
 var app = builder.Build();
 

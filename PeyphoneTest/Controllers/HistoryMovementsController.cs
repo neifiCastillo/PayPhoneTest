@@ -6,6 +6,7 @@ using PeyphoneTest.Custom;
 using PeyphoneTest.Models;
 using PeyphoneTest.Models.Dtos;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using PeyphoneTest.Interfaces;
 namespace PeyphoneTest.Controllers
 {
     [Route("api/[controller]")]
@@ -14,20 +15,22 @@ namespace PeyphoneTest.Controllers
     public class HistoryMovementsController : ControllerBase
     {
 
-        private readonly DbpayphoneTestContext _dbpayphoneTestContext;
+        private readonly IHistoryService _historyService;
 
-        public HistoryMovementsController(DbpayphoneTestContext dbpayphoneTestContext)
+        public HistoryMovementsController(IHistoryService historyService)
         {
-            _dbpayphoneTestContext = dbpayphoneTestContext;
+            _historyService = historyService;
         }
 
-        [HttpGet]
-        [Route("GetHistory")]
-        public async Task<IActionResult> GetHistory()
-        {
-            var list = await _dbpayphoneTestContext.HistoryMovements.ToListAsync();
-            return StatusCode(StatusCodes.Status200OK, new { value = list });
 
+        [HttpGet("{walletId}")]
+        public async Task<IActionResult> GetHistoryByIdAsync(int walletId)
+        {
+            var History = await _historyService.GetHistoryByIdAsync(walletId);
+            if (History == null)
+                return NotFound(new { success = false, message = "No hay movimientos registrados" });
+
+            return Ok(History);
         }
     }
 }
