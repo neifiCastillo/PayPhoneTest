@@ -1,3 +1,4 @@
+
 # 📘 PayphoneTest API
 
 API REST para la gestión de billeteras, transferencias de saldo y visualización de historial de movimientos.  
@@ -181,7 +182,3 @@ Muestra todos los endpoints y permite probarlos desde la web.
 🤝 Desarollador
 Neifi Joel Calzado Castillo
 Contacto: neifi03128@gmail.com
-
-
-
-
