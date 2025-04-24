@@ -1,0 +1,17 @@
+﻿using PeyphoneTest.Models.Dtos;
+using PeyphoneTest.Models;
+
+namespace PeyphoneTest.Interfaces
+{
+    public interface IWalletService
+    {
+
+        Task<List<Wallet>> GetAllWalletsAsync();
+        Task<Wallet?> GetWalletByIdAsync(int id);
+        Task<int> CreateWalletAsync(WalletDto dto);
+        Task<bool> UpdateWalletAsync(int id, WalletDto dto);
+        Task<bool> DeleteWalletAsync(int id);
+        Task<(bool Success, string Message)> TransferAsync(TransferDto dto);
+
+    }
+}

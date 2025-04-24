@@ -4,6 +4,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using PeyphoneTest.Models;
 using PeyphoneTest.Custom;
+using PeyphoneTest.Interfaces;
+using PeyphoneTest.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -51,6 +53,8 @@ builder.Services.AddCors(options =>
 
     });
 });
+
+builder.Services.AddScoped<IWalletService, WalletService>();
 
 var app = builder.Build();
 

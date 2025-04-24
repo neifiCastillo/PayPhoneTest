@@ -45,7 +45,7 @@ namespace PeyphoneTest.Custom
 
             var jwtConfig = new JwtSecurityToken(
                claims: userClaims,
-               expires: DateTime.UtcNow.AddMinutes(1),
+               expires: DateTime.UtcNow.AddMinutes(30),
                signingCredentials: credentials
                );
 
