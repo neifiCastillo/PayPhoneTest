@@ -21,58 +21,60 @@ El único endpoint accesible sin autenticación es: GET /api/HistoryMovements/{w
 #### ✅ `POST /api/Wallet/CreateWallet`
 Crea una nueva billetera.
 ##### 🔸 Request Body
-```json
+
+"json
 {
-  "documentId": "4566222335",
-  "name": "Juan Pérez",
-  "balance": 100.0
+"documentId": "4566222335",
+"name": "Juan Perez",
+balance: 100.0
 }
 
-📝 Reglas de validación:
-documentId: exactamente 10 caracteres
-name: obligatorio, no vacío
-balance: mayor o igual a 0
+📝Validation rules:
+documentId: exactly 10 characters
+Name: required, cannot be empty
+Balance: Mayor o igual a 0
 
-🔸 Response
+🔸 Answer
 {
-  "success": true,
-  "walletId": 1
+"Success": true,
+"WalletId": 1
 }
 
------------------------------
+---------------
 
 #### ✅ GET /api/Wallet/GetAllWallet
-Lista todas las billeteras registradas.
-🔸 Response
+A list of all registered Billeteras.
+🔸 Answer
 {
-  "value": [
-    {
-      "id": 1,
-      "documentId": "4566222335",
-      "name": "Juan Pérez",
-      "balance": 100.0,
-      "createdAt": "2024-04-20T10:00:00Z",
-      "updatedAt": "2024-04-20T10:00:00Z"
-    }
-  ]
+"value": [
+{
+"id": 1,
+"documentId": "4566222335",
+"name": "Juan Perez",
+"balance": 100.0,
+"createdAt": "2024-04-20T10:00:00Z",
+"updatedAt": "2024-04-20T10:00:00Z"
 }
- ---------------------------------
-#### ✅ GET /api/Wallet/{id}
-Consulta una billetera por su ID.
-🔸 Response (200 OK)
+]
+}
+---------------------------------
+#### ✅ Get /api/wallet/{id}
+View the invoice to get your ID.
+🔸 Answer (200 OK)
 {
-  "id": 1,
-  "documentId": "1234567890",
-  "name": "Juan Pérez",
-  "balance": 100.0,
-  "createdAt": "2024-04-20T10:00:00Z",
-  "updatedAt": "2024-04-20T10:00:00Z"
+"id": 1,
+"documentId": "1234567890",
+"name": "Juan Perez",
+"balance": 100.0,
+"createdAt": "2024-04-20T10:00:00Z",
+"updatedAt": "2024-04-20T10:00:00Z"
 }
 🔸 Response (404 Not Found)
 {
-  "success": false,
-  "message": "Billetera no encontrada"
+"success": error,
+"message": "No bookings found"
 }
+
 --------------------------------------
 #### ✅ PUT /api/Wallet/UpdateWallet/{id}
 Actualiza el nombre de una billetera existente.
