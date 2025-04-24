@@ -5,10 +5,8 @@ API REST para la gestión de billeteras, transferencias de saldo y visualizació
 Esta API está construida con **ASP.NET Core 8**, usa **Entity Framework Core** como ORM y **SQL Server** como base de datos.
 
 ---
-
 ## 🌐 Base URL / 
 🔧 En entorno local: http://localhost:{puerto}/api/
-
 ---
 
 ## 🔐 Autenticación
