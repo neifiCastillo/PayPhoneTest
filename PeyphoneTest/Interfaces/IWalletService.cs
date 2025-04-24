@@ -7,7 +7,7 @@ namespace PeyphoneTest.Interfaces
     {
 
         Task<List<WalletDto>> GetAllWalletsAsync();
-        Task<Wallet?> GetWalletByIdAsync(int id);
+        Task<WalletDto?> GetWalletByIdAsync(int id);
         Task<int> CreateWalletAsync(WalletDto dto);
         Task<bool> UpdateWalletAsync(int id, WalletDto dto);
         Task<bool> DeleteWalletAsync(int id);

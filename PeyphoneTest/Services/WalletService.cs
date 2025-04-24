@@ -37,15 +37,24 @@ namespace PeyphoneTest.Services
             }
         }
 
-        public async Task<Wallet?> GetWalletByIdAsync(int id)
+        public async Task<WalletDto?> GetWalletByIdAsync(int id)
         {
             if (id <= 0)
                 throw new ArgumentException("El ID de la billetera debe ser mayor a cero.");
 
             try
             {
-                var wallet = await _context.Wallets.FindAsync(id);
-                return wallet; 
+                  var wallet = await _context.Wallets
+                  .Where(w => w.Id == id)
+                  .Select(w => new WalletDto
+                  {
+                      Id = w.Id,
+                      Name = w.Name,
+                      Balance = w.Balance,
+                      DocumentId = w.DocumentId
+                  }) .FirstOrDefaultAsync();
+
+                  return wallet;
             }
             catch (Exception ex)
             {
