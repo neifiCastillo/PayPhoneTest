@@ -142,7 +142,7 @@ namespace PeyphoneTest.IntegrationTests.Controllers
             var result = await response.Content.ReadFromJsonAsync<TransferResponse>();
 
             Assert.False(result.Success);
-            Assert.Equal("Debe proporcionar el nombre de la cuenta de destino.", result.Message);
+            Assert.Contains("Debe proporcionar el nombre de la cuenta de destino.", result.Message);
         }
 
         [Fact]

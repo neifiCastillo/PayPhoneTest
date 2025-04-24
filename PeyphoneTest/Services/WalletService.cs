@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PeyphoneTest.Models;
 using PeyphoneTest.Models.Dtos;
+using PeyphoneTest.Validators;
 
 namespace PeyphoneTest.Services
 {
@@ -44,19 +45,17 @@ namespace PeyphoneTest.Services
             }
         }
 
+
         public async Task<int> CreateWalletAsync(WalletDto dto)
         {
-            if (string.IsNullOrWhiteSpace(dto.Name))
-                throw new ArgumentException("El nombre de la billetera es obligatorio.");
+            var validator = new WalletDtoValidator();
+            var validationResult = validator.Validate(dto);
 
-            if (string.IsNullOrWhiteSpace(dto.DocumentId))
-                throw new ArgumentException("El documento es obligatorio.");
-
-            if (dto.DocumentId.Length != 10)
-                throw new ArgumentException("El documento debe tener exactamente 10 caracteres.");
-
-            if (dto.Balance < 0)
-                throw new ArgumentException("El saldo inicial no puede ser negativo.");
+            if (!validationResult.IsValid)
+            {
+                var errorMessage = string.Join("; ", validationResult.Errors.Select(e => e.ErrorMessage));
+                throw new ArgumentException(errorMessage);
+            }
 
             try
             {
@@ -82,11 +81,14 @@ namespace PeyphoneTest.Services
 
         public async Task<bool> UpdateWalletAsync(int id, WalletDto dto)
         {
-            if (id <= 0)
-                throw new ArgumentException("El ID de la billetera debe ser válido.");
+            var validator = new WalletDtoValidator();
+            var validationResult = validator.Validate(dto);
 
-            if (string.IsNullOrWhiteSpace(dto.Name))
-                throw new ArgumentException("El nombre es obligatorio.");
+            if (!validationResult.IsValid)
+            {
+                var errorMessage = string.Join("; ", validationResult.Errors.Select(e => e.ErrorMessage));
+                throw new ArgumentException(errorMessage);
+            }
 
             try
             {
@@ -130,17 +132,15 @@ namespace PeyphoneTest.Services
         }
         public async Task<(bool Success, string Message)> TransferAsync(TransferDto dto)
         {
-            if (dto.FromWalletId <= 0 || dto.ToWalletId <= 0)
-                return (false, "Los IDs de las billeteras deben ser válidos.");
 
-            if (dto.FromWalletId == dto.ToWalletId)
-                return (false, "No se puede transferir a la misma billetera.");
+            var validator = new TransferDtoValidator();
+            var validationResult = validator.Validate(dto);
 
-            if (dto.Amount <= 0)
-                return (false, "El monto debe ser mayor a cero.");
-
-            if (string.IsNullOrWhiteSpace(dto.ToWalletName))
-                return (false, "Debe proporcionar el nombre de la cuenta de destino.");
+            if (!validationResult.IsValid)
+            {
+                var errorMessage = string.Join("; ", validationResult.Errors.Select(e => e.ErrorMessage));
+                return (false, errorMessage);
+            }
 
             try
             {

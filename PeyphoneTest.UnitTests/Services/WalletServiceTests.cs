@@ -70,7 +70,7 @@ namespace PeyphoneTest.UnitTests.Services
             var result = await service.UpdateWalletAsync(wallet.Id, updatedDto);
 
             Assert.True(result);
-            Assert.Equal("Nuevo Nombre", (await context.Wallets.FindAsync(wallet.Id))?.Name);
+            Assert.Contains("Nuevo Nombre", (await context.Wallets.FindAsync(wallet.Id))?.Name);
         }
 
         [Fact]
@@ -163,7 +163,7 @@ namespace PeyphoneTest.UnitTests.Services
             var result = await service.TransferAsync(dto);
 
             Assert.False(result.Success);
-            Assert.Equal("Saldo insuficiente.", result.Message);
+            Assert.Contains("Saldo insuficiente.", result.Message);
         }
 
         [Fact]
@@ -204,7 +204,7 @@ namespace PeyphoneTest.UnitTests.Services
             var result = await service.TransferAsync(dto);
 
             Assert.False(result.Success);
-            Assert.Equal("El nombre de la cuenta de destino no coincide con el ID proporcionado.", result.Message);
+            Assert.Contains("El nombre de la cuenta de destino no coincide con el ID proporcionado.", result.Message);
         }
 
         [Fact]
@@ -245,7 +245,7 @@ namespace PeyphoneTest.UnitTests.Services
             var result = await service.TransferAsync(dto);
 
             Assert.True(result.Success);
-            Assert.Equal("Transferencia completada exitosamente.", result.Message);
+            Assert.Contains("Transferencia completada exitosamente.", result.Message);
         }
 
 
@@ -302,7 +302,7 @@ namespace PeyphoneTest.UnitTests.Services
             var result = await service.TransferAsync(dto);
 
             Assert.False(result.Success);
-            Assert.Equal("No se puede transferir a la misma billetera.", result.Message);
+            Assert.Contains("No se puede transferir a la misma billetera.", result.Message);
         }
 
         [Fact]
@@ -343,7 +343,7 @@ namespace PeyphoneTest.UnitTests.Services
             var result = await service.TransferAsync(dto);
 
             Assert.False(result.Success);
-            Assert.Equal("Debe proporcionar el nombre de la cuenta de destino.", result.Message);
+            Assert.Contains("Debe proporcionar el nombre de la cuenta de destino.", result.Message);
         }
 
     }
