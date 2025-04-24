@@ -15,11 +15,20 @@ namespace PeyphoneTest.Services
             _context = context;
         }
 
-        public async Task<List<Wallet>> GetAllWalletsAsync()
+        public async Task<List<WalletDto>> GetAllWalletsAsync()
         {
             try
             {
-                return await _context.Wallets.ToListAsync();
+                // todo: add mapper as an improvement :D
+                return await _context.Wallets
+                    .Select(w => new WalletDto
+                    {
+                        Id = w.Id,
+                        Name = w.Name,
+                        Balance = w.Balance,
+                        DocumentId = w.DocumentId
+                    })
+                    .ToListAsync();
             }
             catch (Exception ex)
             {

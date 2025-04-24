@@ -6,7 +6,7 @@ namespace PeyphoneTest.Interfaces
     public interface IWalletService
     {
 
-        Task<List<Wallet>> GetAllWalletsAsync();
+        Task<List<WalletDto>> GetAllWalletsAsync();
         Task<Wallet?> GetWalletByIdAsync(int id);
         Task<int> CreateWalletAsync(WalletDto dto);
         Task<bool> UpdateWalletAsync(int id, WalletDto dto);
