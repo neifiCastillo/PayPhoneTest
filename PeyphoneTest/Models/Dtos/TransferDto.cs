@@ -5,5 +5,8 @@
         public int FromWalletId { get; set; }
         public int ToWalletId { get; set; }
         public decimal Amount { get; set; }
+
+        public string ToWalletName { get; set; } = string.Empty; 
     }
+
 }

@@ -10,7 +10,6 @@ using PeyphoneTest.Interfaces;
 namespace PeyphoneTest.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
     [ApiController]
     public class HistoryMovementsController : ControllerBase
     {
@@ -24,13 +23,27 @@ namespace PeyphoneTest.Controllers
 
 
         [HttpGet("{walletId}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetHistoryByIdAsync(int walletId)
         {
-            var History = await _historyService.GetHistoryByIdAsync(walletId);
-            if (History == null)
-                return NotFound(new { success = false, message = "No hay movimientos registrados" });
+            try
+            {
+                var history = await _historyService.GetHistoryByIdAsync(walletId);
 
-            return Ok(History);
+                if (history == null || !history.Any())
+                    return NotFound(new { success = false, message = "No hay movimientos registrados" });
+
+                return Ok(history);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, new { success = false, message = "Error al obtener el historial de la billetera." });
+            }
         }
+
     }
 }

@@ -78,7 +78,7 @@ public partial class DbpayphoneTestContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("createdAt");
             entity.Property(e => e.DocumentId)
-                .HasMaxLength(50)
+                .HasMaxLength(10)
                 .IsUnicode(false)
                 .HasColumnName("documentId");
             entity.Property(e => e.Name)

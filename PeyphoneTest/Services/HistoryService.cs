@@ -14,19 +14,27 @@ namespace PeyphoneTest.Services
         {
             _context = context;
         }
-
         public async Task<List<HistoryMovementDto>> GetHistoryByIdAsync(int walletId)
         {
-            return await _context.HistoryMovements
-                                 .Where(u => u.WalletId == walletId).Select(u => new HistoryMovementDto
-                                 {
-                                     Amount = u.Amount,
-                                     Type = u.Type,
-                                     CreatedAt = u.CreatedAt
+            if (walletId <= 0)
+                throw new ArgumentException("El ID de la billetera debe ser válido.");
 
-                                 }).ToListAsync();
-
-
+            try
+            {
+                return await _context.HistoryMovements
+                    .Where(u => u.WalletId == walletId)
+                    .Select(u => new HistoryMovementDto
+                    {
+                        Amount = u.Amount,
+                        Type = u.Type,
+                        CreatedAt = u.CreatedAt
+                    })
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("No se pudo obtener el historial de movimientos.", ex);
+            }
         }
 
     }
